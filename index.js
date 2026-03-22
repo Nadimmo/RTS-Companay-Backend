@@ -28,22 +28,22 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
-        const database = client.db("visa-processingDB").collection("usersInfo");
+        const collectionOfUserInfo = client.db("visa-processingDB").collection("usersInfo");
 
         app.post("/userInfo", async(req,res)=>{
             const info = req.body;
-            const result = await database.insertOne(info)
+            const result = await collectionOfUserInfo.insertOne(info)
             res.send(result)
         })
         app.get("/userInfo", async(req,res)=>{
             const info = req.body;
-            const result = await database.find(info).toArray()
+            const result = await collectionOfUserInfo.find(info).toArray()
             res.send(result)
         })
         app.get("/userInfo/:id", async(req,res)=>{
             const id = req.params.id;
             const filter = {_id: new ObjectId(id)}
-            const result =  await database.findOne(filter)
+            const result =  await collectionOfUserInfo.findOne(filter)
             res.send(result)
         })
 
