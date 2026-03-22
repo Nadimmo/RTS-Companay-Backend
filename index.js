@@ -1,69 +1,70 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 5000
-const cors = require('cors');
-const dotenv = require('dotenv');
-dotenv.config()
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 5000;
+const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
+// Middlewares
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  credentials: true
+}));
+app.use(express.json()); 
 
-app.use(cors())
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
-
-
-
-
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.rrkijcq.mongodb.net/?appName=Cluster0`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
-        const collectionOfUserInfo = client.db("visa-processingDB").collection("usersInfo");
+    await client.connect(); 
 
-        app.post("/userInfo", async(req,res)=>{
-            const info = req.body;
-            const result = await collectionOfUserInfo.insertOne(info)
-            res.send(result)
-        })
-        app.get("/userInfo", async(req,res)=>{
-            const info = req.body;
-            const result = await collectionOfUserInfo.find(info).toArray()
-            res.send(result)
-        })
-        app.get("/userInfo/:id", async(req,res)=>{
-            const id = req.params.id;
-            const filter = {_id: new ObjectId(id)}
-            const result =  await collectionOfUserInfo.findOne(filter)
-            res.send(result)
-        })
+    const db = client.db("visa-processingDB");
+    const userCollection = db.collection("usersInfo");
 
+    // User Info API
+    app.post("/userInfo", async (req, res) => {
+      try {
+        const info = req.body;
+        const result = await userCollection.insertOne(info);
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ error: "Failed to save user info" });
+      }
+    });
+    app.get("/userInfo", async (req, res) => {
+     const result = await userCollection.find().toArray();
+     res.send(result);
+    });
 
-    // Send a ping to confirm a successful connection
+    
+    
+   
+    
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(" MongoDB Connected Successfully");
   } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
+    // keep connection alive
   }
 }
+
 run().catch(console.dir);
 
+//  Root
+app.get("/", (req, res) => {
+  res.send("Project is Ready !");
+});
 
-
-app.get('/', (req, res) => {
-  res.send('Project is Ready !')
-})
-
+// Server
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`🚀 Server running on port ${port}`);
+});
