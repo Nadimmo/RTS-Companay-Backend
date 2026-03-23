@@ -41,11 +41,25 @@ async function run() {
         res.status(500).send({ error: "Failed to save user info" });
       }
     });
+
     app.get("/userInfo", async (req, res) => {
      const result = await userCollection.find().toArray();
      res.send(result);
     });
 
+    app.get("/userInfo/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.delete("/userInfo/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.deleteOne(query);
+      res.send(result);
+    });
     
     
    
