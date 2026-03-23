@@ -7,8 +7,9 @@ dotenv.config();
 
 // Middlewares
 app.use(cors({
-  origin: ["http://localhost:5173", "https://rts-companay-backend.vercel.app/", "https://rts-companay.vercel.app/"],
-  credentials: true
+  origin: ["http://localhost:5173", "https://rts-companay.vercel.app"],
+  credentials: true,
+  methods: "GET, POST, PUT, DELETE",
 }));
 app.use(express.json()); 
 
