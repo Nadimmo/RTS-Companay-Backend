@@ -15,9 +15,7 @@ app.use(express.json());
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.rrkijcq.mongodb.net/?appName=Cluster0`;
-
-const client = new MongoClient(uri, {
+const uri = `mongodb+srv://rts-company:${process.env.DB_PASSWORD}@cluster0.kuogxf5.mongodb.net/?appName=Cluster0`;const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -27,7 +25,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // await client.connect(); 
+    await client.connect(); 
 
     const db = client.db("visa-processingDB");
     const userCollection = db.collection("usersInfo");
