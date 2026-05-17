@@ -21,7 +21,7 @@ app.use(express.json());
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const uri =
-  "mongodb+srv://rts-company:Os33zOJ7fPAx51o3@cluster0.kuogxf5.mongodb.net/visa-processingDB?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://rts-company:mr4B9Guf1sbaONEk@cluster0.kuogxf5.mongodb.net/visa-processingDB?retryWrites=true&w=majority&appName=Cluster0";
 
 const client = new MongoClient(uri, {
   serverApi: {
