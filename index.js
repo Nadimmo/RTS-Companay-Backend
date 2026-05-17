@@ -15,7 +15,7 @@ app.use(express.json());
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
-const uri = `mongodb+srv://rts-company:${process.env.DB_PASSWORD}@cluster0.kuogxf5.mongodb.net/?appName=Cluster0`;const client = new MongoClient(uri, {
+const uri = `mongodb+srv://rts-company:Os33zOJ7fPAx51o3@cluster0.kuogxf5.mongodb.net/?appName=Cluster0`;const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
