@@ -80,12 +80,8 @@ async function run() {
 
 run().catch(console.dir);
 
-//  Root
 app.get("/", (req, res) => {
   res.send("Project is Ready !");
 });
 
-// Server
-app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
-});
+module.exports = app;
