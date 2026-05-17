@@ -6,16 +6,24 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // Middlewares
-app.use(cors({
-  origin: ["http://localhost:5173", "https://rts-companay.vercel.app"],
-  credentials: true,
-  methods: "GET, POST, PUT, DELETE",
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://rts-companay.vercel.app",
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use(express.json()); 
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
-const uri = `mongodb+srv://rts-company:Os33zOJ7fPAx51o3@cluster0.kuogxf5.mongodb.net/?appName=Cluster0`;const client = new MongoClient(uri, {
+const uri =
+  "mongodb+srv://rts-company:Os33zOJ7fPAx51o3@cluster0.kuogxf5.mongodb.net/visa-processingDB?retryWrites=true&w=majority&appName=Cluster0";
+
+const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
